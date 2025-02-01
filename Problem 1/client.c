@@ -45,8 +45,10 @@ int main(int argc, char const* argv[])
             scanf(" %c", &clMsg[i]);
         }
 
-        send(sockD, clMsg, sizeof(clMsg), 0);
-        recv(sockD, &count, sizeof(count), 0);
+        if (clMsg[0] != '#') {
+            send(sockD, clMsg, sizeof(clMsg), 0);
+            recv(sockD, &count, sizeof(count), 0);
+        }
 
         printf("\n");
         printf("The number of adjacent identical characters is %i\n", count);
