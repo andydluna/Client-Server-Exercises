@@ -44,6 +44,14 @@ int main(int argc, char const* argv[])
 
             scanf("%c", &clMsg[i]);
         }
+
+
+        if (i >= 4) {
+            send(sockD, clMsg, MAX_LENGTH, 0);
+            recv(sockD, &count, sizeof(count), 0);
+        }
+
+        printf("The number of words ending with \"ing\" is %i\n", count);
     }
 
     return 0;
