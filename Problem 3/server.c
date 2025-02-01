@@ -5,6 +5,14 @@
 #include <sys/socket.h> //for socket APIs
 #include <sys/types.h>
 
+void endsWithIng(int j, char word[], int* count) {
+    if (j > 2 && word[j-3] == 'i' && word[j-2] == 'n'
+                && word[j - 1] == 'g') {
+        (*count)++;
+        printf("%s\n", word);
+    }
+}
+
 int main(int argc, char const* argv[])
 {
     // create server socket similar to what was done in
@@ -39,23 +47,13 @@ int main(int argc, char const* argv[])
             word[j++] = strData[i];
         }
         else {
-            if (j > 2 && strData[j-3] == 'i' && strData[j-2] == 'n'
-                && strData[j - 1] == 'g') {
-                // FIXME: ensure it only prints when word ends with ing
-                count++;
-                printf("%s\n", word);
-            }
+            endsWithIng(j, word, &count);
             j = 0;
             memset(word, '\0', MAX_LENGTH);
         }
         i++;
     }
-
-    if (j > 2 && strData[j-3] == 'i' && strData[j-2] == 'n'
-        && strData[j - 1] == 'g') {
-        count++;
-        printf("%s\n", word);
-    }
+    endsWithIng(j, word, &count);
 
     send(clientSocket, &count, sizeof(count), 0);
 
