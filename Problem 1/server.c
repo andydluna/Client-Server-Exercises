@@ -6,7 +6,6 @@
 
 int main(int argc, char const* argv[])
 {
-
     // create server socket similar to what was done in
     // client program
     int servSockD = socket(AF_INET, SOCK_STREAM, 0);
@@ -27,6 +26,20 @@ int main(int argc, char const* argv[])
 
     // integer to hold client socket.
     int clientSocket = accept(servSockD, NULL, NULL);
+
+    const int MAX_LENGTH = 999;
+    int i = 0, j = 1, count = 0;
+    char strData[MAX_LENGTH];
+
+    recv(clientSocket, strData, MAX_LENGTH, 0);
+
+    while (strData[j] != '#') {
+        if (strData[i++] == strData[j++]) {
+            count++;
+        }
+    }
+
+    send(clientSocket, &count, sizeof(count), 0);
 
     return 0;
 }

@@ -24,27 +24,32 @@ int main(int argc, char const* argv[])
     }
 
     else {
-        int maxLength = 999, i = 0;
-        char clMsg[maxLength], hundreds = 0, tens = 0, ones = 0;
+        const int MAX_LENGTH = 999;
+        int i = 0, count = 0;
+        char clMsg[MAX_LENGTH];
 
-        printf("Please enter a string of characters ending with # (up to %i):\n", maxLength);
+        printf("Please enter a string of characters ending with # (up to %i):\n", MAX_LENGTH);
         scanf("%c", &clMsg[0]);
 
         while (clMsg[i] != '#') {
             i++;
 
             // Input size validation
-            if (i >= maxLength) {
+            if (i >= MAX_LENGTH) {
                 printf("Error...\n");
-                printf("Input is more than %i chars...\n", maxLength);
+                printf("Input is more than %i chars...\n", MAX_LENGTH);
 
                 return 1;
             }
 
-            scanf("%c", &clMsg[i]);
+            scanf(" %c", &clMsg[i]);
         }
 
         send(sockD, clMsg, sizeof(clMsg), 0);
+        recv(sockD, &count, sizeof(count), 0);
+
+        printf("\n");
+        printf("The number of adjacent identical characters is %i\n", count);
     }
 
     return 0;
