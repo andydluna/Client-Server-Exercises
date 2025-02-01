@@ -28,9 +28,29 @@ int main(int argc, char const* argv[])
     int clientSocket = accept(servSockD, NULL, NULL);
 
     const int MAX_LENGTH = 999;
+    int i = 0, num_chars = 0, count = 0;
     char strData[MAX_LENGTH];
 
     recv(clientSocket, strData, MAX_LENGTH, 0);
+
+    while (strData[i] != '#') {
+        if (strData[i] == ' ') {
+            if (num_chars == 2) {
+                count++;
+            }
+            num_chars = 0;
+        }
+        else {
+            num_chars++;
+        }
+        i++;
+    }
+
+    if (num_chars == 2) {
+        count++;
+    }
+
+    send(clientSocket, &count, sizeof(count), 0);
 
     return 0;
 }

@@ -42,8 +42,16 @@ int main(int argc, char const* argv[])
                 return 1;
             }
 
-            scanf(" %c", &clMsg[i]);
+            scanf("%c", &clMsg[i]);
         }
+
+        if (i >= 2) {
+            send(sockD, clMsg, sizeof(clMsg), 0);
+            recv(sockD, &count, sizeof(count), 0);
+        }
+
+        printf("\n");
+        printf("The number of two-character words is %i\n", count);
     }
 
     return 0;
